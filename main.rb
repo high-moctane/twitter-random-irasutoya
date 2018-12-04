@@ -53,33 +53,35 @@ def json_thumbnail_url(json)
 end
 
 
-if __FILE__ == $0
-  # 各種Keyのロード
-  Dotenv.load
+# ---------------------------------------------------------------------------
+# main
+# ---------------------------------------------------------------------------
 
-  # ランダムいらすとやをとってくる
-  json = fetch_random_irasutoya_json
-  title = json_title(json)
-  summary = json_summary(json)
-  url = json_url(json)
-  thumbnail_url = json_thumbnail_url(json)
+# 各種Keyのロード
+Dotenv.load
 
-  # twitter クライアントの作成
-  twitter = Twitter::REST::Client.new do |config|
-    config.consumer_key = ENV["CONSUMER_KEY"]
-    config.consumer_secret = ENV["CONSUMER_SECRET"]
-    config.access_token = ENV["ACCESS_TOKEN"]
-    config.access_token_secret = ENV["ACCESS_TOKEN_SECRET"]
-  end
+# ランダムいらすとやをとってくる
+json = fetch_random_irasutoya_json
+title = json_title(json)
+summary = json_summary(json)
+url = json_url(json)
+thumbnail_url = json_thumbnail_url(json)
 
-  # 画像をフェッチする都合上一時フォルダの中で操作します
-  Dir.mktmpdir do |dir|
-    thumb_name = dir + "/thumbnail.png"
-    open(thumbnail_url, "rb") { |f| open(thumb_name, "wb") { |png| png.write(f.read) } }
+# twitter クライアントの作成
+twitter = Twitter::REST::Client.new do |config|
+  config.consumer_key = ENV["CONSUMER_KEY"]
+  config.consumer_secret = ENV["CONSUMER_SECRET"]
+  config.access_token = ENV["ACCESS_TOKEN"]
+  config.access_token_secret = ENV["ACCESS_TOKEN_SECRET"]
+end
 
-    # プロフィールのアップデート
-    twitter.update_profile({name: title[0..20], description: summary})
-    open(thumb_name) { |f| twitter.update_profile_image(f) }
-    twitter.update(summary[1..(140-url.length)] + url)
-  end
+# 画像をフェッチする都合上一時フォルダの中で操作します
+Dir.mktmpdir do |dir|
+  thumb_name = dir + "/thumbnail.png"
+  open(thumbnail_url, "rb") { |f| open(thumb_name, "wb") { |png| png.write(f.read) } }
+
+  # プロフィールのアップデート
+  twitter.update_profile({name: title[0..20], description: summary})
+  open(thumb_name) { |f| twitter.update_profile_image(f) }
+  twitter.update(summary[1..(140-url.length)] + url)
 end

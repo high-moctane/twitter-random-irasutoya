@@ -9,4 +9,4 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gem "twitter"
 gem "clockwork"
 gem "dotenv"
-
+gem "activesupport"
