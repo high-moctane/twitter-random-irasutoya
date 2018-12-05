@@ -1,5 +1,5 @@
 require "clockwork"
-require "active_support/all"
+require "active_support/time"
 
 module Clockwork
   main_path = File.expand_path("../main.rb", __FILE__)
