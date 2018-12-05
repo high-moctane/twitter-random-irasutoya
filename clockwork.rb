@@ -7,6 +7,7 @@ module Clockwork
   handler do |job|
     case job
     when "update"
+      sleep(rand(1..30))
       load main_path
     end
   end
