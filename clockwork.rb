@@ -1,5 +1,9 @@
 require "clockwork"
 require "active_support/time"
+require "dotenv"
+
+# 設定のロード
+Dotenv.load
 
 module Clockwork
   main_path = File.expand_path("../main.rb", __FILE__)
@@ -7,10 +11,10 @@ module Clockwork
   handler do |job|
     case job
     when "update"
-      sleep(rand(1..30))
+      sleep(rand(0..ENV["RANDOM_DURATION"].to_i))
       load main_path
     end
   end
 
-  every(1.day, "update", :at => "00:00")
+  every(1.day, "update", :at => ENV["UPDATE_AT"])
 end
