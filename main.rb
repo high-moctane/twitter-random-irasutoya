@@ -83,5 +83,5 @@ Dir.mktmpdir do |dir|
   # プロフィールのアップデート
   twitter.update_profile({name: title[0..20], description: summary})
   open(thumb_name) { |f| twitter.update_profile_image(f) }
-  twitter.update(summary[1..(140-url.length)] + url)
+  twitter.update(summary[0...(140-url.length)] + url)
 end
