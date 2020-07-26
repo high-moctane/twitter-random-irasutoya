@@ -1,7 +1,6 @@
 require "net/http"
 require "uri"
 require "json"
-require "dotenv"
 require "open-uri"
 require "twitter"
 require "pp"
@@ -57,9 +56,6 @@ end
 # main
 # ---------------------------------------------------------------------------
 
-# 各種Keyのロード
-Dotenv.load
-
 # ランダムいらすとやをとってくる
 json = fetch_random_irasutoya_json
 title = json_title(json)
@@ -78,7 +74,7 @@ end
 # 画像をフェッチする都合上一時フォルダの中で操作します
 Dir.mktmpdir do |dir|
   thumb_name = dir + "/thumbnail.png"
-  open(thumbnail_url, "rb") { |f| open(thumb_name, "wb") { |png| png.write(f.read) } }
+  URI.open(thumbnail_url, "rb") { |f| open(thumb_name, "wb") { |png| png.write(f.read) } }
 
   # プロフィールのアップデート
   twitter.update_profile({name: title[0..20], description: summary})

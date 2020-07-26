@@ -13,12 +13,14 @@ Twitter のプロフィールをランダムないらすとやにする(｀･ω
 
 ### 準備
 
-`.env` ファイルに Twitter の各種キーを書く。
+1. `.env` ファイルに Twitter の各種キーを書く。
 
-### 手動更新
+2. Gem のインストール
+
+    ```
+    $ bundle install
+    ```
+
+### 実行
 
 `ruby main.rb`
-
-### 毎日 00:00 に更新
-
-`clockwork clockwork.rb`
