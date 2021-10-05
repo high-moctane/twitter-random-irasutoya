@@ -1,4 +1,7 @@
 # twitter-random-irasutoya
+
+[![Rust](https://github.com/high-moctane/twitter-random-irasutoya/actions/workflows/rust.yml/badge.svg)](https://github.com/high-moctane/twitter-random-irasutoya/actions/workflows/rust.yml)
+
 Twitter のプロフィールをランダムないらすとやにする(｀･ω･´)
 
 ## 概要
